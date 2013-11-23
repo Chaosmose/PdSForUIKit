@@ -39,12 +39,10 @@
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
-                                lineSpacing:(CGFloat)lineSpacing
-                             textAlignement:(NSTextAlignment)textAlignement{
+                                lineSpacing:(CGFloat)lineSpacing{
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:lineSpacing];
-    [paragraphStyle setAlignment:textAlignement];
     
     NSDictionary *attributes = @{
                             NSParagraphStyleAttributeName:  paragraphStyle,
@@ -58,13 +56,12 @@
 /**
  *  Computes the height according to a constrained width
  *
- *  @param string the string
  *  @param width  the constraint
  *
  *  @return the height
  */
-+(CGFloat)heightOfAttributedString:(NSAttributedString*)string constrainedToWidth:(CGFloat)width{
-    CGRect rect = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+-(CGFloat)heightConstrainedToWidth:(CGFloat)width{
+    CGRect rect = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                        context:nil];
     return rect.size.height;
@@ -74,13 +71,12 @@
 /**
  *  Computes the height according to a constrained height
  *
- *  @param string the string
  *  @param width  the constraint
  *
  *  @return the width
  */
-+(CGFloat)widthOfAttributedString:(NSAttributedString*)string constrainedToHeight:(CGFloat)height{
-    CGRect rect = [string boundingRectWithSize:CGSizeMake(MAXFLOAT, height)
+-(CGFloat)widthConstrainedToHeight:(CGFloat)height{
+    CGRect rect = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, height)
                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                        context:nil];
     return rect.size.width;

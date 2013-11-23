@@ -32,35 +32,31 @@
  *  @param font           the font
  *  @param textColor      the text color
  *  @param lineSpacing    the spacing between lines
- *  @param textAlignement the text alignement
  *
  *  @return an attributed string
  */
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
-                                lineSpacing:(CGFloat)lineSpacing
-                             textAlignement:(NSTextAlignment)textAlignement;
+                                lineSpacing:(CGFloat)lineSpacing;
 
 /**
  *  Computes the height according to a constrained width
  *
- *  @param string the string
  *  @param width  the constraint
  *
  *  @return the height
  */
-+(CGFloat)heightOfAttributedString:(NSAttributedString*)string constrainedToWidth:(CGFloat)width;
+-(CGFloat)heightConstrainedToWidth:(CGFloat)width;
 
 /**
  *  Computes the height according to a constrained height
  *
- *  @param string the string
  *  @param width  the constraint
  *
  *  @return the width
  */
-+(CGFloat)widthOfAttributedString:(NSAttributedString*)string constrainedToHeight:(CGFloat)height;
+-(CGFloat)widthConstrainedToHeight:(CGFloat)height;
 
 
 @end
