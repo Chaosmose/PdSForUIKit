@@ -23,4 +23,5 @@
 #ifndef PDSCategoriesForUIKit_h
 #define PDSCategoriesForUIKit_h
 #import "UIView+RectCorners.h"
+#import "NSAttributedString+PDSFacilities.h"
 #endif
