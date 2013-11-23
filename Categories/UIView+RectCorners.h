@@ -14,7 +14,7 @@
 // along with "PDSCategoriesForUIKit"  If not, see <http://www.gnu.org/licenses/>
 //
 //  UIView+RoundedRect.h
-//  SeCoucherMoinsBete
+//  PDSCategoriesForUIKit
 //
 //  Created by Benoit Pereira da Silva on 23/11/2013.
 //  Copyright (c) 2013 http://pereira-da-silva.com  All rights reserved.
@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIView (RoundedRect)
+@interface UIView (RectCorners)
 
 /**
  *  Sets the rect corners.

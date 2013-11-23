@@ -22,5 +22,5 @@
 
 #ifndef PDSCategoriesForUIKit_h
 #define PDSCategoriesForUIKit_h
-#import "UIView+RoundedRect.h"
+#import "UIView+RectCorners.h"
 #endif
