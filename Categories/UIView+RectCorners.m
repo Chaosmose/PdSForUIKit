@@ -42,5 +42,30 @@
     self.layer.mask = mask;
 }
 
+/**
+ *  Defines if the view has already been masked
+ *
+ *  @return YES if the view has a mask
+ */
+- (BOOL)hasBeenMasked{
+    return (self.layer.mask!=nil);
+}
+
+/**
+ *  Masks the current view to be circular
+ *
+ *  @param circular
+ */
+- (void)setCircular:(BOOL)circular{
+    if(circular){
+    [self setRectCorners:UIRectCornerAllCorners
+                  radius:self.bounds.size.width/2.f];
+    }else{
+        self.layer.mask=nil;
+    }
+}
+
+
+
 
 @end

@@ -32,4 +32,19 @@
  */
 - (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius;
 
+/**
+ *  Defines if the view has already been masked
+ *
+ *  @return YES if the view has a mask
+ */
+- (BOOL)hasBeenMasked;
+
+
+/**
+ *  Masks the current view to be circular
+ *
+ *  @param circular
+ */
+- (void)setCircular:(BOOL)circular;
+
 @end
