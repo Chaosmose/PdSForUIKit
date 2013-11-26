@@ -20,8 +20,10 @@
 //  http://pereira-da-silva.com
 //
 
-#ifndef PDSCategoriesForUIKit_h
-#define PDSCategoriesForUIKit_h
+#ifndef PdSCategoriesForUIKit_h
+#define PdSCategoriesForUIKit_h
+
 #import "UIView+RectCorners.h"
-#import "NSAttributedString+PDSFacilities.h"
+#import "NSAttributedString+PdSFacilities.h"
+
 #endif

@@ -23,7 +23,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSAttributedString (PDSFacilities)
+@interface NSAttributedString (PdSFacilities)
 
 /**
  *  An NSAttributedString factory with the essentials

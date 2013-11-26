@@ -23,7 +23,7 @@
 
 #import "NSAttributedString+PDSFacilities.h"
 
-@implementation NSAttributedString (PDSFacilities)
+@implementation NSAttributedString (PdSFacilities)
 
 /**
  *  An NSAttributedString factory with the essentials
