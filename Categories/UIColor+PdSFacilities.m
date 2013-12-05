@@ -61,15 +61,12 @@ static NSLock *crayolaNameCacheLock;
 // UIColor_Undocumented
 // Undocumented methods of UIColor
 @interface UIColor (UIColor_Undocumented)
-///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString *)styleString;
 @end
 #endif // SUPPORTS_UNDOCUMENTED_API
 
 @interface UIColor (UIColor_Expanded_Support)
-///////////////////////////////////////////////////////////////////////////////////////////////////
 + (void)populateColorNameCache;
-///////////////////////////////////////////////////////////////////////////////////////////////////
 + (void)populateCrayolaNameCache;
 @end
 
@@ -469,7 +466,7 @@ static NSLock *crayolaNameCacheLock;
         [colors addObject:[UIColor colorWithHue:h2 saturation:s brightness:v alpha:a]];
     }
     
-    return [[colors copy] autorelease];
+    return [colors copy];
 }
 
 #pragma mark String utilities
@@ -532,7 +529,7 @@ static NSLock *crayolaNameCacheLock;
     for (name = bestPos-1; *name != ','; --name)
         ;
     ++name;
-    NSString *result = [[[NSString alloc] initWithBytes:name length:bestPos - name encoding:NSUTF8StringEncoding] autorelease];
+    NSString *result = [[NSString alloc] initWithBytes:name length:bestPos - name encoding:NSUTF8StringEncoding];
     
     return result;
 }
