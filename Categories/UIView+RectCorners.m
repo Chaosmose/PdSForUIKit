@@ -23,6 +23,14 @@
 
 #import "UIView+RectCorners.h"
 
+@interface UIView(){
+    BOOL _hasBeenMasked;
+    UIRectCorner _rectCorners;
+    CGFloat _radius;
+    CGFloat _padding;
+}
+@end
+
 @implementation UIView (RectCorners)
 
 /**
@@ -32,15 +40,29 @@
  *  @param radius  the corner radius
  */
 - (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius {
-    CGRect rect = self.bounds;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
-                                                   byRoundingCorners:corners
-                                                         cornerRadii:CGSizeMake(radius, radius)];
-    CAShapeLayer *mask = [CAShapeLayer layer];
-    mask.frame = rect;
-    mask.path  = path.CGPath;
-    self.layer.mask = mask;
+    [self setRectCorners:corners radius:radius withPadding:0.f];
 }
+
+
+/**
+ *  Sets the rect corners.
+ *
+ *  @param corners UIRectCornerAllCorners for all, bottom only (UIRectCornerBottomLeft|UIRectCornerBottomRight)
+ *  @param radius  the corner radius
+ *  @param padding the padding
+ */
+- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(CGFloat)padding{
+    if(!_hasBeenMasked){
+        [self _setRectCorners:corners radius:radius withPadding:padding];
+    }else if (_rectCorners!=corners ||_radius!=radius || _padding!=padding){
+        [self _setRectCorners:corners radius:radius withPadding:padding];
+    }
+    _rectCorners=corners;
+    _radius=radius;
+    _padding=padding;
+    _hasBeenMasked=YES;
+}
+
 
 /**
  *  Defines if the view has already been masked
@@ -48,7 +70,7 @@
  *  @return YES if the view has a mask
  */
 - (BOOL)hasBeenMasked{
-    return (self.layer.mask!=nil);
+    return _hasBeenMasked;
 }
 
 /**
@@ -66,6 +88,28 @@
 }
 
 
+#pragma mark - Private implementation
+
+- (void)_setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(CGFloat)padding{
+    CGRect rect = self.bounds;
+    rect=[self _padRect:rect withPadding:padding];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
+                                               byRoundingCorners:corners
+                                                     cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *mask = [CAShapeLayer layer];
+    mask.frame = rect;
+    mask.path  = path.CGPath;
+    self.layer.mask = mask;
+}
+
+
+- (CGRect)_padRect:(CGRect)rect withPadding:(CGFloat)padding{
+    if(padding==0.f)
+        return rect;
+    rect=CGRectInset(rect, padding, padding);
+    rect.origin=CGPointMake(rect.origin.x+padding, rect.origin.y+padding);
+    return rect;
+}
 
 
 @end

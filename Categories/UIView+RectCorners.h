@@ -32,6 +32,18 @@
  */
 - (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius;
 
+
+
+/**
+ *  Sets the rect corners.
+ *
+ *  @param corners UIRectCornerAllCorners for all, bottom only (UIRectCornerBottomLeft|UIRectCornerBottomRight)
+ *  @param radius  the corner radius
+ *  @param padding the padding
+ */
+- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(CGFloat)padding;
+
+
 /**
  *  Defines if the view has already been masked
  *
