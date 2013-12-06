@@ -22,16 +22,15 @@
 //
 
 #import "UIView+RectCorners.h"
+#import <objc/runtime.h>
 
-@interface UIView(){
-    BOOL _hasBeenMasked;
-    UIRectCorner _rectCorners;
-    CGFloat _radius;
-    CGFloat _padding;
-}
-@end
+static char const * const hasBeenMaskedOnceKey="hasBeenMaskedOnceKey";
+static char const * const rectCornersKey="rectCornersKey";
+static char const * const radiusKey="radiusKey";
+static char const * const paddingKey="paddingKey";
 
 @implementation UIView (RectCorners)
+
 
 /**
  *  Sets the rect corners.
@@ -52,15 +51,22 @@
  *  @param padding the padding
  */
 - (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(CGFloat)padding{
-    if(!_hasBeenMasked){
+    
+    BOOL i_hasBeenMaskedOnce=[objc_getAssociatedObject(self, hasBeenMaskedOnceKey) boolValue];
+    UIRectCorner i_corners=[objc_getAssociatedObject(self, rectCornersKey) integerValue];
+    CGFloat i_radius=[objc_getAssociatedObject(self, radiusKey) floatValue];
+    CGFloat i_padding=[objc_getAssociatedObject(self, paddingKey) floatValue];
+    if(!i_hasBeenMaskedOnce){
         [self _setRectCorners:corners radius:radius withPadding:padding];
-    }else if (_rectCorners!=corners ||_radius!=radius || _padding!=padding){
+    }else if (i_corners!=corners || i_radius!=radius || i_padding!=padding){
         [self _setRectCorners:corners radius:radius withPadding:padding];
     }
-    _rectCorners=corners;
-    _radius=radius;
-    _padding=padding;
-    _hasBeenMasked=YES;
+    
+    objc_setAssociatedObject(self, hasBeenMaskedOnceKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, rectCornersKey, @(corners), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, radiusKey, @(radius), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, paddingKey, @(padding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
 }
 
 
@@ -70,7 +76,8 @@
  *  @return YES if the view has a mask
  */
 - (BOOL)hasBeenMasked{
-    return _hasBeenMasked;
+    BOOL i_hasBeenMaskedOnce=objc_getAssociatedObject(self, &hasBeenMaskedOnceKey);
+    return i_hasBeenMaskedOnce;
 }
 
 /**
