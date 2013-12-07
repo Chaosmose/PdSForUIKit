@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '5.0'
   s.requires_arc = true
   s.source_files =  'Categories/*.{h,m}', 'Bases/*.{h,m}'
-  s.public_header_files = 'Categories/*.h','Bases/*.h'
+  s.public_header_files = 'PdSForUIKit.h','Categories/*.h','Bases/*.h'
 end
