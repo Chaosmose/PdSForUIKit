@@ -22,7 +22,28 @@
 
 #import <UIKit/UIKit.h>
 
+/*
+ 
+    You can apply masks :
+ 
+    [self setRectCorners:UIRectCornerTopLeft|UIRectCornerTopRight
+                  radius:7.f
+            withPadding:UIEdgeInsetsMake(5.f, 20.f, 0.f, 20.f)];
+ 
+    or 
+ 
+    [cell setRectCorners:UIRectCornerTopLeft|UIRectCornerTopRight
+               radius:7.f
+                  top:5.f
+               bottom:0.f
+                 left:20.f
+                right:20.f];
+ 
+ */
+
 
 @interface PdSUITableViewCell : UITableViewCell
+
+
 
 @end

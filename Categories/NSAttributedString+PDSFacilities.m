@@ -21,7 +21,7 @@
 //  Copyright (c) 2013 http://pereira-da-silva.com All rights reserved.
 //
 
-#import "NSAttributedString+PDSFacilities.h"
+#import "NSAttributedString+PdSFacilities.h"
 
 @implementation NSAttributedString (PdSFacilities)
 

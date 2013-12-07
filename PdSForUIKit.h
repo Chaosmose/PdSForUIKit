@@ -25,11 +25,14 @@
 #define PdSForUIKit_h
 
 // Categories
+
+#import "UITableViewController+PdSFacilities.h"
 #import "UIView+RectCorners.h"
 #import "NSAttributedString+PdSFacilities.h"
 #import "UIColor+PdSFacilities.h"
 
 // Base classes
+
 #import "PdSUITableViewCell.h"
 #import "PdSUIView.h"
 
