@@ -30,7 +30,8 @@
  *  @param corners UIRectCornerAllCorners for all, bottom only (UIRectCornerBottomLeft|UIRectCornerBottomRight)
  *  @param radius  the corner radius
  */
-- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+- (void)setRectCorners:(UIRectCorner)corners
+                radius:(CGFloat)radius;
 
 /**
  *  Sets the rect corners.
@@ -39,7 +40,27 @@
  *  @param radius  the corner radius
  *  @param padding the padding
  */
-- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(UIEdgeInsets)padding;
+- (void)setRectCorners:(UIRectCorner)corners
+                radius:(CGFloat)radius
+           withPadding:(UIEdgeInsets)padding;
+
+
+/**
+ *  For those that do not like the UIEdgeInsets syntax
+ *
+ *  @param corners UIRectCornerAllCorners for all, bottom only (UIRectCornerBottomLeft|UIRectCornerBottomRight)
+ *  @param radius  the corner radius
+ *  @param top     top padding mask
+ *  @param bottom  bottom  padding mask
+ *  @param left    left padding mask
+ *  @param right   right padding mask
+ */
+- (void)setRectCorners:(UIRectCorner)corners
+                radius:(CGFloat)radius
+            top:(CGFloat)top
+         bottom:(CGFloat)bottom
+           left:(CGFloat)left
+          right:(CGFloat)right;
 
 
 /**

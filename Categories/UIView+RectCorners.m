@@ -42,6 +42,31 @@ static char const * const previousSize="previousSize";
     [self setRectCorners:corners radius:radius withPadding:UIEdgeInsetsZero];
 }
 
+
+/**
+ *  For those that do not like the UIEdgeInsets syntax
+ *
+ *  @param corners UIRectCornerAllCorners for all, bottom only (UIRectCornerBottomLeft|UIRectCornerBottomRight)
+ *  @param radius  the corner radius
+ *  @param top     top padding mask
+ *  @param bottom  bottom  padding mask
+ *  @param left    left padding mask
+ *  @param right   right padding mask
+ */
+- (void)setRectCorners:(UIRectCorner)corners
+                radius:(CGFloat)radius
+                   top:(CGFloat)top
+                bottom:(CGFloat)bottom
+                  left:(CGFloat)left
+                 right:(CGFloat)right{
+    
+    [self setRectCorners:corners
+                  radius:radius
+             withPadding:UIEdgeInsetsMake(top, left, bottom, right)];
+}
+
+
+
 /**
  *  Sets the rect corners.
  *
@@ -81,7 +106,7 @@ static char const * const previousSize="previousSize";
  *  @return YES if the view has a mask
  */
 - (BOOL)hasBeenMasked{
-    BOOL i_hasBeenMaskedOnce=objc_getAssociatedObject(self, &hasBeenMaskedOnceKey);
+    BOOL i_hasBeenMaskedOnce=[objc_getAssociatedObject(self, hasBeenMaskedOnceKey) boolValue];
     return i_hasBeenMaskedOnce;
 }
 
