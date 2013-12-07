@@ -21,7 +21,6 @@
 //
 
 #import "PdSUITableViewCell.h"
-#import "UIView+RectCorners.h"
 
 @implementation PdSUITableViewCell
 

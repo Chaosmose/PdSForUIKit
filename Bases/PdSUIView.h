@@ -22,7 +22,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UIView+RectCorners.h"
 
 @interface PdSUIView : UIView
 
