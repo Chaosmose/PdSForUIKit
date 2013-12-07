@@ -76,13 +76,58 @@
 - (void)remaskIfNecessary;
 
 
-
 /**
  *  Masks the current view to be circular
  *
  *  @param circular
  */
 - (void)setCircular:(BOOL)circular;
+
+
+/**
+ *  You can add a border (if your set Rect corners)
+ *
+ *  @param color the border color
+ *  @param width the border width
+ */
+- (void)setBorderColor:(UIColor*)color andWidth:(CGFloat)width;
+
+
+#pragma mark - experimental 
+
+
+/*
+ 
+ CAShapeLayer *__weak weakShape=[CAShapeLayer layer];
+ weakShape.strokeStart=0.0f;
+ weakShape.strokeColor=kAZUIGreenColor.CGColor; // We don not use the bordercolor
+ weakShape.lineCap=kCALineCapRound;
+ weakShape.lineJoin=kCALineJoinRound;
+ weakShape.lineWidth=3.f;
+ weakShape.lineDashPhase=3.f;
+ weakShape.lineDashPattern=@[@(7),@(3),@(5),@(2)];
+ weakShape.fillColor=nil;
+ [cell applyShapeLayerPrototype:weakShape];
+
+[cell setRectCorners:UIRectCornerTopLeft|UIRectCornerTopRight|UIRectCornerBottomLeft|UIRectCornerBottomRight
+              radius:8.f
+                 top:5.f
+              bottom:0.f
+                left:20.f
+               right:20.f];
+ */
+
+
+/**
+ *  Advanced shape addition, all the shapeLayer properties will be applied  to the current bezier path
+ *  The shapeLayerPrototype will be retained so you need to pass a Weak reference.
+ *  CAShapeLayer*__weak weakShape=[CAShapeLayer layer];
+ *  Use strokeColor
+ *  
+ *
+ *  @param shapeLayer the shapeLayer prototype that will be applyied to the current bezier path
+ */
+- (void)applyShapeLayerPrototype:(CAShapeLayer*)shapeLayerPrototype;
 
 
 @end
