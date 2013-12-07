@@ -67,7 +67,7 @@ alpha:a]
 
 
 // OTHER ADDITIONS  TO  BE CLEANED AN QUALIFIED
-// CURRENTLY COPYED AND PASTED
+// CURRENTLY COPYED AND PASTED FOR ANALYSIS
 
 // Created by Erica Sadun, http://ericasadun.com
 // iPhone Developer's Cookbook, 3.0 Edition

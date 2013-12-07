@@ -27,10 +27,10 @@
 static char const * const hasBeenMaskedOnceKey="hasBeenMaskedOnceKey";
 static char const * const rectCornersKey="rectCornersKey";
 static char const * const radiusKey="radiusKey";
-static char const * const paddingKey="paddingKey";
+static char const * const paddingKey="paddingKsey";
+static char const * const previousSize="previousSize";
 
 @implementation UIView (RectCorners)
-
 
 /**
  *  Sets the rect corners.
@@ -39,9 +39,8 @@ static char const * const paddingKey="paddingKey";
  *  @param radius  the corner radius
  */
 - (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius {
-    [self setRectCorners:corners radius:radius withPadding:0.f];
+    [self setRectCorners:corners radius:radius withPadding:UIEdgeInsetsZero];
 }
-
 
 /**
  *  Sets the rect corners.
@@ -50,23 +49,29 @@ static char const * const paddingKey="paddingKey";
  *  @param radius  the corner radius
  *  @param padding the padding
  */
-- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(CGFloat)padding{
-    
+- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(UIEdgeInsets)padding{
     BOOL i_hasBeenMaskedOnce=[objc_getAssociatedObject(self, hasBeenMaskedOnceKey) boolValue];
     UIRectCorner i_corners=[objc_getAssociatedObject(self, rectCornersKey) integerValue];
     CGFloat i_radius=[objc_getAssociatedObject(self, radiusKey) floatValue];
-    CGFloat i_padding=[objc_getAssociatedObject(self, paddingKey) floatValue];
-    if(!i_hasBeenMaskedOnce){
-        [self _setRectCorners:corners radius:radius withPadding:padding];
-    }else if (i_corners!=corners || i_radius!=radius || i_padding!=padding){
-        [self _setRectCorners:corners radius:radius withPadding:padding];
+    UIEdgeInsets i_padding=UIEdgeInsetsFromString(objc_getAssociatedObject(self, paddingKey)) ;
+    CGSize i_size=CGSizeFromString(objc_getAssociatedObject(self,previousSize));
+    BOOL proceed=NO;
+    if( !i_hasBeenMaskedOnce){
+        proceed=YES;
+    }else if (  i_corners!=corners ||
+                i_radius!=radius ||
+                UIEdgeInsetsEqualToEdgeInsets(i_padding, padding)||
+                !CGSizeEqualToSize(i_size,self.bounds.size)){
+        proceed=YES;
     }
-    
-    objc_setAssociatedObject(self, hasBeenMaskedOnceKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, rectCornersKey, @(corners), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, radiusKey, @(radius), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, paddingKey, @(padding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
+    if(proceed){
+        [self _setRectCorners:corners radius:radius withPadding:padding];
+        objc_setAssociatedObject(self, hasBeenMaskedOnceKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, rectCornersKey, @(corners), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, radiusKey, @(radius), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, paddingKey,NSStringFromUIEdgeInsets(padding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, previousSize,NSStringFromCGSize(self.bounds.size), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
 }
 
 
@@ -87,35 +92,28 @@ static char const * const paddingKey="paddingKey";
  */
 - (void)setCircular:(BOOL)circular{
     if(circular){
-    [self setRectCorners:UIRectCornerAllCorners
-                  radius:self.bounds.size.width/2.f];
+        [self setRectCorners:UIRectCornerAllCorners
+                      radius:self.bounds.size.width/2.f];
     }else{
         self.layer.mask=nil;
+        objc_setAssociatedObject(self, hasBeenMaskedOnceKey, @NO, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
 
 
 #pragma mark - Private implementation
 
-- (void)_setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(CGFloat)padding{
-    CGRect rect = self.bounds;
-    rect=[self _padRect:rect withPadding:padding];
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
+
+- (void)_setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(UIEdgeInsets)padding{
+    CGRect rect = UIEdgeInsetsInsetRect(self.bounds, padding);
+   UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
                                                byRoundingCorners:corners
                                                      cornerRadii:CGSizeMake(radius, radius)];
+    
     CAShapeLayer *mask = [CAShapeLayer layer];
-    mask.frame = rect;
+    mask.frame = self.bounds;
     mask.path  = path.CGPath;
     self.layer.mask = mask;
-}
-
-
-- (CGRect)_padRect:(CGRect)rect withPadding:(CGFloat)padding{
-    if(padding==0.f)
-        return rect;
-    rect=CGRectInset(rect, padding, padding);
-    rect.origin=CGPointMake(rect.origin.x+padding, rect.origin.y+padding);
-    return rect;
 }
 
 
