@@ -32,7 +32,7 @@
  *  @param radius  the corner radius
  */
 - (void)setRectCorners:(UIRectCorner)corners
-                radius:(CGFloat)radius;
+                withRadius:(CGFloat)radius;
 
 /**
  *  Sets the rect corners.
@@ -42,8 +42,8 @@
  *  @param padding the padding
  */
 - (void)setRectCorners:(UIRectCorner)corners
-                radius:(CGFloat)radius
-           withPadding:(UIEdgeInsets)padding;
+                withRadius:(CGFloat)radius
+               andPadding:(UIEdgeInsets)padding;
 
 
 /**
@@ -57,7 +57,7 @@
  *  @param right   right padding mask
  */
 - (void)setRectCorners:(UIRectCorner)corners
-                radius:(CGFloat)radius
+                withRadius:(CGFloat)radius
             top:(CGFloat)top
          bottom:(CGFloat)bottom
            left:(CGFloat)left

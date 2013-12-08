@@ -48,10 +48,10 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
  *  @param corners UIRectCornerAllCorners for all, bottom only (UIRectCornerBottomLeft|UIRectCornerBottomRight)
  *  @param radius  the corner radius
  */
-- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius {
+- (void)setRectCorners:(UIRectCorner)corners withRadius:(CGFloat)radius {
     [self setRectCorners:corners
-                  forRadius:radius
-                 padding:UIEdgeInsetsZero];
+                  withRadius:radius
+                 andPadding:UIEdgeInsetsZero];
     
 }
 
@@ -67,15 +67,15 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
  *  @param right   right padding mask
  */
 - (void)setRectCorners:(UIRectCorner)corners
-                radius:(CGFloat)radius
+                withRadius:(CGFloat)radius
                    top:(CGFloat)top
                 bottom:(CGFloat)bottom
                   left:(CGFloat)left
                  right:(CGFloat)right{
     
     [self setRectCorners:corners
-               forRadius:radius
-                 padding:UIEdgeInsetsMake(top, left, bottom, right)];
+               withRadius:radius
+                 andPadding:UIEdgeInsetsMake(top, left, bottom, right)];
 }
 
 /**
@@ -86,8 +86,8 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
  *  @param padding the padding
  */
 - (void)setRectCorners:(UIRectCorner)corners
-             forRadius:(CGFloat)radius
-               padding:(UIEdgeInsets)padding{
+             withRadius:(CGFloat)radius
+               andPadding:(UIEdgeInsets)padding{
     BOOL i_hasBeenMaskedOnce=[objc_getAssociatedObject(self, hasBeenMaskedOnceKey) boolValue];
     UIRectCorner i_corners=[objc_getAssociatedObject(self, rectCornersKey) integerValue];
     CGFloat i_radius=[objc_getAssociatedObject(self, radiusKey) floatValue];
@@ -108,7 +108,7 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
         objc_setAssociatedObject(self, radiusKey, @(radius), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         objc_setAssociatedObject(self, paddingKey,NSStringFromUIEdgeInsets(padding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         objc_setAssociatedObject(self, previousSize,NSStringFromCGSize(self.bounds.size), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [self _setRectCorners:corners radius:radius withPadding:padding];
+        [self _setRectCorners:corners withRadius:radius andPadding:padding];
     }
 }
 
@@ -134,8 +134,8 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
         UIEdgeInsets i_padding=UIEdgeInsetsFromString(objc_getAssociatedObject(self, paddingKey)) ;
         
         [self setRectCorners:i_corners
-                   forRadius:i_radius
-                     padding:i_padding];
+                   withRadius:i_radius
+                     andPadding:i_padding];
 
 }
 
@@ -147,7 +147,7 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
 - (void)setCircular:(BOOL)circular{
     if(circular){
         [self setRectCorners:UIRectCornerAllCorners
-                      radius:self.bounds.size.width/2.f];
+                      withRadius:self.bounds.size.width/2.f];
     }else{
         self.layer.mask=nil;
         objc_setAssociatedObject(self, hasBeenMaskedOnceKey, @NO, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -200,8 +200,8 @@ static char const * const usesAShapePrototype="kUsesAShapePrototype";
 
 
 - (void)_setRectCorners:(UIRectCorner)corners
-                 radius:(CGFloat)radius
-            withPadding:(UIEdgeInsets)padding{
+                 withRadius:(CGFloat)radius
+            andPadding:(UIEdgeInsets)padding{
     CGRect rect = UIEdgeInsetsInsetRect(self.bounds, padding);
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
                                                byRoundingCorners:corners
