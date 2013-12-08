@@ -21,11 +21,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+RectCorners.h"
+#import "PdSForUIKit.h"
 
 /*
  
-    You can apply masks :
+    You can  use appaerance proxy :
+ 
+    [[PdSUITableViewCell appearance] setRectCorners:UIRectCornerAllCorners];
+    [[PdSUITableViewCell appearance] setRadius:10.f];
+    //UIEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right)
+    [[PdSUITableViewCell appearance] setPadding:UIEdgeInsetsMake(40.f, 40.f, 10.f,10.f)];
+ 
+ 
+    Or call directly :
+ 
  
     [self setRectCorners:UIRectCornerTopLeft|UIRectCornerTopRight
                   radius:7.f
@@ -40,11 +49,12 @@
                  left:20.f
                 right:20.f];
  
+ 
+ 
+ 
  */
 
 
 @interface PdSUITableViewCell : UITableViewCell
-
-
 
 @end

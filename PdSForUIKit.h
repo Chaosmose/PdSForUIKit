@@ -21,8 +21,8 @@
 //
 //
 
-#ifndef PdSForUIKit_h
-#define PdSForUIKit_h
+#ifndef PdSForUIKit
+#define PdSForUIKit
 
 // Categories
 

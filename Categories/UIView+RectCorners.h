@@ -22,6 +22,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIView (RectCorners)
 
 /**
@@ -90,11 +91,24 @@
  *  @param color the border color
  *  @param width the border width
  */
-- (void)setBorderColor:(UIColor*)color andWidth:(CGFloat)width;
+- (void)setBorderColor:(UIColor*)color
+              andWidth:(CGFloat)width;
 
 
-#pragma mark - experimental 
+#pragma mark - UI_APPEARANCE_SELECTOR
 
+- (UIRectCorner)rectCorners UI_APPEARANCE_SELECTOR;
+- (void)setRectCorners:(UIRectCorner)aRectCorners UI_APPEARANCE_SELECTOR;
+- (UIEdgeInsets)padding UI_APPEARANCE_SELECTOR;
+- (void)setPadding:(UIEdgeInsets)aPadding UI_APPEARANCE_SELECTOR;
+- (CGFloat)radius UI_APPEARANCE_SELECTOR;
+- (void)setRadius:(CGFloat)aRadius UI_APPEARANCE_SELECTOR;
+- (UIColor *)borderColor UI_APPEARANCE_SELECTOR;
+- (void)setBorderColor:(UIColor *)aBorderColor UI_APPEARANCE_SELECTOR;
+- (CGFloat)borderWidth UI_APPEARANCE_SELECTOR;
+- (void)setBorderWidth:(CGFloat)aBorderWidth UI_APPEARANCE_SELECTOR;
+
+#pragma mark - experimental
 
 /*
  

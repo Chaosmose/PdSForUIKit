@@ -13,16 +13,24 @@
 // You should have received a copy of the GNU LESSER GENERAL PUBLIC LICENSE
 // along with "PdSForUIKit"  If not, see <http://www.gnu.org/licenses/>
 //
-//
-//  PdSUIView.h
+//  PdSUIView.m
 //  PdSForUIKit
 //
 //  Created by Benoit Pereira da Silva on 07/12/2013.
 //
 //
 
-#import <UIKit/UIKit.h>
-#import "UIView+RectCorners.h"
+#import "PdSUIButton.h"
 
-@interface PdSUIView : UIView
+
+@implementation PdSUIButton
+
+
+#pragma mark - layout
+
+- (void)layoutSubviews{
+    [self remaskIfNecessary];
+    [super layoutSubviews];
+}
+
 @end

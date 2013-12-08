@@ -24,18 +24,23 @@
 #import "UIView+RectCorners.h"
 #import <objc/runtime.h>
 
-static char const * const hasBeenMaskedOnceKey="hasBeenMaskedOnceKey";
-static char const * const rectCornersKey="rectCornersKey";
-static char const * const radiusKey="radiusKey";
-static char const * const paddingKey="paddingKsey";
-static char const * const previousSize="previousSize";
+static char const * const hasBeenMaskedOnceKey="kHasBeenMaskedOnceKey";
+
+static char const * const rectCornersKey="kRectCornersKey";
+static char const * const radiusKey="kRadiusKey";
+static char const * const paddingKey="kPaddingKsey";
+static char const * const previousSize="kPreviousSize";
+
 // Border
-static char const * const borderLayer="borderLayer";
-static char const * const strokeColor="strokeColor";
-static char const * const lineWidth="lineWidth";
-static char const * const usesAShapePrototype="usesAShapePrototype";
+static char const * const borderLayer="kBborderLayer";
+static char const * const strokeColor="kStrokeColor";
+static char const * const lineWidth="kLineWidth";
+
+// Experimental
+static char const * const usesAShapePrototype="kUsesAShapePrototype";
 
 @implementation UIView (RectCorners)
+
 
 /**
  *  Sets the rect corners.
@@ -44,7 +49,10 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
  *  @param radius  the corner radius
  */
 - (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius {
-    [self setRectCorners:corners radius:radius withPadding:UIEdgeInsetsZero];
+    [self setRectCorners:corners
+                  forRadius:radius
+                 padding:UIEdgeInsetsZero];
+    
 }
 
 
@@ -66,11 +74,9 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
                  right:(CGFloat)right{
     
     [self setRectCorners:corners
-                  radius:radius
-             withPadding:UIEdgeInsetsMake(top, left, bottom, right)];
+               forRadius:radius
+                 padding:UIEdgeInsetsMake(top, left, bottom, right)];
 }
-
-
 
 /**
  *  Sets the rect corners.
@@ -79,7 +85,9 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
  *  @param radius  the corner radius
  *  @param padding the padding
  */
-- (void)setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(UIEdgeInsets)padding{
+- (void)setRectCorners:(UIRectCorner)corners
+             forRadius:(CGFloat)radius
+               padding:(UIEdgeInsets)padding{
     BOOL i_hasBeenMaskedOnce=[objc_getAssociatedObject(self, hasBeenMaskedOnceKey) boolValue];
     UIRectCorner i_corners=[objc_getAssociatedObject(self, rectCornersKey) integerValue];
     CGFloat i_radius=[objc_getAssociatedObject(self, radiusKey) floatValue];
@@ -105,6 +113,7 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
 }
 
 
+
 /**
  *  Defines if the view has already been masked
  *
@@ -119,12 +128,15 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
  *  Re-apply the mask if there one if the size of the view has changed.
  */
 - (void)remaskIfNecessary{
-    if(self.hasBeenMasked){
+
         UIRectCorner i_corners=[objc_getAssociatedObject(self, rectCornersKey) integerValue];
         CGFloat i_radius=[objc_getAssociatedObject(self, radiusKey) floatValue];
         UIEdgeInsets i_padding=UIEdgeInsetsFromString(objc_getAssociatedObject(self, paddingKey)) ;
-        [self setRectCorners:i_corners radius:i_radius withPadding:i_padding];
-    }
+        
+        [self setRectCorners:i_corners
+                   forRadius:i_radius
+                     padding:i_padding];
+
 }
 
 /**
@@ -183,11 +195,13 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
     }
 }
 
+#pragma mark - drawing
 
-#pragma mark - Private implementation
 
 
-- (void)_setRectCorners:(UIRectCorner)corners radius:(CGFloat)radius withPadding:(UIEdgeInsets)padding{
+- (void)_setRectCorners:(UIRectCorner)corners
+                 radius:(CGFloat)radius
+            withPadding:(UIEdgeInsets)padding{
     CGRect rect = UIEdgeInsetsInsetRect(self.bounds, padding);
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
                                                byRoundingCorners:corners
@@ -198,10 +212,11 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
     mask.path  = path.CGPath;
     self.layer.mask = mask;
     
-    UIColor *i_strokeColor=objc_getAssociatedObject(self, strokeColor);
-    CGFloat i_lineWidth=[objc_getAssociatedObject(self, lineWidth) floatValue];
-    
-    if(i_strokeColor){
+    // Border
+    if([self _borderIsDefined]){
+        UIColor *i_strokeColor=objc_getAssociatedObject(self, strokeColor);
+        CGFloat i_lineWidth=[objc_getAssociatedObject(self, lineWidth) floatValue];
+        
         CAShapeLayer *sublayer = objc_getAssociatedObject(self, borderLayer);
         if(!sublayer){
             sublayer=[CAShapeLayer layer];
@@ -215,15 +230,76 @@ static char const * const usesAShapePrototype="usesAShapePrototype";
         sublayer.lineWidth=i_lineWidth*2; // We mask half of the drawing to have a better rendering
         [self.layer addSublayer:sublayer];
     }
-    
-    
-    
 }
 
 
+#pragma  mark - UIAppearence proxy support
+
+// We have a bunch of setter / Getter + conditionnal drawing
+
+- (void)setRectCorners:(UIRectCorner)aRectCorners{
+    objc_setAssociatedObject(self, rectCornersKey, @(aRectCorners), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self _drawIfNecessary];
+}
+
+- (UIRectCorner)rectCorners{
+    return [objc_getAssociatedObject(self, rectCornersKey) integerValue];
+}
 
 
+- (void)setPadding:(UIEdgeInsets)aPadding{
+    objc_setAssociatedObject(self, paddingKey,NSStringFromUIEdgeInsets(aPadding), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self _drawIfNecessary];
+}
 
+- (UIEdgeInsets)padding{
+    return  UIEdgeInsetsFromString(objc_getAssociatedObject(self, paddingKey));
+}
+
+- (void)setRadius:(CGFloat)aRadius{
+    objc_setAssociatedObject(self, radiusKey, @(aRadius), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self _drawIfNecessary];
+}
+
+- (CGFloat)radius{
+    return [objc_getAssociatedObject(self, radiusKey) floatValue];
+}
+
+- (void)setBorderColor:(UIColor *)aBorderColor{
+    objc_setAssociatedObject(self,strokeColor, aBorderColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self _drawIfNecessary];
+}
+
+- (UIColor *)borderColor{
+    return objc_getAssociatedObject(self, strokeColor);
+}
+
+
+- (void)setBorderWidth:(CGFloat)aBorderWidth{
+     objc_setAssociatedObject(self,lineWidth, @(aBorderWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self _drawIfNecessary];
+}
+
+- (CGFloat)borderWidth{
+    return [objc_getAssociatedObject(self, lineWidth) floatValue];
+}
+
+- (void)_drawIfNecessary{
+    if([self _maskIsDrawable]){
+        [self remaskIfNecessary];
+    }
+}
+
+- (BOOL)_maskIsDrawable{
+    BOOL drawable=(objc_getAssociatedObject(self, rectCornersKey) && objc_getAssociatedObject(self, radiusKey) && objc_getAssociatedObject(self, paddingKey));
+    return drawable;
+}
+
+
+- (BOOL)_borderIsDefined{
+    BOOL defined=(objc_getAssociatedObject(self, lineWidth) && objc_getAssociatedObject(self, strokeColor) );
+    return defined;
+}
 
 
 @end
