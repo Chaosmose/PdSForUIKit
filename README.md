@@ -6,6 +6,11 @@ A set of usefull categories bases classes for UIKit.
 
 With PdSForUIKit you can mask a UITableViewCell, or any other with round corner and add custom borders without sacrifying performance.
 
+## Installation using cocoapods
+
+    Add this line to your pod file 
+    pod 'PdSForUIKit', {:git => 'https://github.com/benoit-pereira-da-silva/PdSForUIKit.git'}
+    
 ###  UIAPPEARANCE support :
 
 	[[PdSUITableViewCell appearance] setRectCorners:UIRectCornerAllCorners];
