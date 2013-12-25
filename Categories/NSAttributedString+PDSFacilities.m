@@ -23,6 +23,9 @@
 
 #import "NSAttributedString+PdSFacilities.h"
 
+const CGFloat PdSDefaultLinesSpacing=0.f;
+
+
 @implementation NSAttributedString (PdSFacilities)
 
 

@@ -32,7 +32,8 @@ typedef enum PdSTextAlignment {
    PdSTextAlignmentNatural   =  4   // Indicates the default alignment for script
 } PdSTextAlignments;
 
-const CGFloat PdSDefaultLinesSpacing = 0.f;
+
+extern const CGFloat PdSDefaultLinesSpacing;
 
 @interface NSAttributedString (PdSFacilities)
 
