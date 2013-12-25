@@ -7,7 +7,6 @@ Pod::Spec.new do |s|
   s.source      = { :git => 'https://github.com/benoit-pereira-da-silva/PdSForUIKit.git'}
   s.license     = { :type => "LGPL", :file => "LICENSE" }
   s.ios.deployment_target = '5.0'
-  s.ios.frameworks = 'UIKit', 'CoreGraphics'
   s.requires_arc = true
   s.source_files =  'PdSForUIKit.h','Categories/*.{h,m}', 'Bases/*.{h,m}'
   s.public_header_files = 'PdSForUIKit.h','Categories/*.h','Bases/*.h'
