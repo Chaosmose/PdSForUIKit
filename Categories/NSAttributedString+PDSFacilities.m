@@ -22,6 +22,8 @@
 //
 
 #import "NSAttributedString+PdSFacilities.h"
+#import <UIKit/NSText.h>
+
 
 @implementation NSAttributedString (PdSFacilities)
 
@@ -40,18 +42,17 @@
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
-                                  alignment:(NSTextAligment)alignment
+                                  alignment:(PdSTextAlignments)alignment
                                 lineSpacing:(CGFloat)lineSpacing{
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:lineSpacing];
-    [paragraphStyle setAlignment:alignment]
+    [paragraphStyle setAlignment:alignment];
     
     NSDictionary *attributes = @{
                             NSParagraphStyleAttributeName:  paragraphStyle,
                             NSForegroundColorAttributeName : textColor,
                             NSFontAttributeName : font,
-                            
                             };
     NSAttributedString*attString=[[NSAttributedString alloc] initWithString:string attributes:attributes];
     return attString;

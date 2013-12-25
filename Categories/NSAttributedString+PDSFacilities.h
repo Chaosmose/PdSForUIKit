@@ -23,7 +23,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <UIKit/NSText.h>
 
+
+/* Values coming from NSTextAlignment */
+typedef enum PdSTextAlignment {
+   PdSTextAlignmentLeft      =  NSTextAlignmentLeft,    // Visually left aligned
+   PdSTextAlignmentCenter    =  NSTextAlignmentCenter,    // Visually centered
+   PdSTextAlignmentRight     =  NSTextAlignmentRight,    // Visually right aligned
+   PdSTextAlignmentJustified =  NSTextAlignmentJustified,    // Fully-justified. The last line in a paragraph is natural-aligned.
+   PdSTextAlignmentNatural   =  NSTextAlignmentNatural   // Indicates the default alignment for script
+} PdSTextAlignments;
+
+const CGFloat PdSDefaultLinesSpacing = 0.f;
 
 @interface NSAttributedString (PdSFacilities)
 
@@ -41,7 +53,7 @@
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
-                                  alignment:(NSTextAligment)alignment
+                                  alignment:(PdSTextAlignments)alignment
                                 lineSpacing:(CGFloat)lineSpacing;
 
 /**
