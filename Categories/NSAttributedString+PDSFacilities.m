@@ -25,29 +25,33 @@
 
 @implementation NSAttributedString (PdSFacilities)
 
-/**
- *  An NSAttributedString factory with the essentials
- *
- *  @param string         the string
- *  @param font           the font
- *  @param textColor      the text color
- *  @param lineSpacing    the spacing between lines
- *  @param textAlignement the text alignement
- *
- *  @return an attributed string
- */
+
+    /**
+     *  An NSAttributedString factory with the essentials
+     *
+     *  @param string         the string
+     *  @param font           the font
+     *  @param textColor      the text color
+     *  @param alignment      the alignment
+     *  @param lineSpacing    the spacing between lines
+     *
+     *  @return an attributed string
+*/
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
+                                  alignment:(NSTextAligment)alignment
                                 lineSpacing:(CGFloat)lineSpacing{
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:lineSpacing];
+    [paragraphStyle setAlignment:alignment]
     
     NSDictionary *attributes = @{
                             NSParagraphStyleAttributeName:  paragraphStyle,
                             NSForegroundColorAttributeName : textColor,
-                            NSFontAttributeName : font
+                            NSFontAttributeName : font,
+                            
                             };
     NSAttributedString*attString=[[NSAttributedString alloc] initWithString:string attributes:attributes];
     return attString;

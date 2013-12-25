@@ -22,6 +22,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 
 @interface NSAttributedString (PdSFacilities)
 
@@ -31,6 +33,7 @@
  *  @param string         the string
  *  @param font           the font
  *  @param textColor      the text color
+ *  @param alignment      the alignment
  *  @param lineSpacing    the spacing between lines
  *
  *  @return an attributed string
@@ -38,6 +41,7 @@
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
+                                  alignment:(NSTextAligment)alignment
                                 lineSpacing:(CGFloat)lineSpacing;
 
 /**
