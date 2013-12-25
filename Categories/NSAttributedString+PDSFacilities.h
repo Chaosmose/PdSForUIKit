@@ -22,17 +22,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <UIKit/NSText.h>
 
-
-/* Values coming from NSTextAlignment */
+/* Values coming from  NSTextAlignment */
 typedef enum PdSTextAlignment {
-   PdSTextAlignmentLeft      =  NSTextAlignmentLeft,    // Visually left aligned
-   PdSTextAlignmentCenter    =  NSTextAlignmentCenter,    // Visually centered
-   PdSTextAlignmentRight     =  NSTextAlignmentRight,    // Visually right aligned
-   PdSTextAlignmentJustified =  NSTextAlignmentJustified,    // Fully-justified. The last line in a paragraph is natural-aligned.
-   PdSTextAlignmentNatural   =  NSTextAlignmentNatural   // Indicates the default alignment for script
+   PdSTextAlignmentLeft      =  0,    // Visually left aligned
+   PdSTextAlignmentCenter    =  1,    // Visually centered
+   PdSTextAlignmentRight     =  2,    // Visually right aligned
+   PdSTextAlignmentJustified =  3,    // Fully-justified. The last line in a paragraph is natural-aligned.
+   PdSTextAlignmentNatural   =  4   // Indicates the default alignment for script
 } PdSTextAlignments;
 
 const CGFloat PdSDefaultLinesSpacing = 0.f;

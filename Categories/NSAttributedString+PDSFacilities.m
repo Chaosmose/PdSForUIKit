@@ -22,8 +22,6 @@
 //
 
 #import "NSAttributedString+PdSFacilities.h"
-#import <UIKit/NSText.h>
-
 
 @implementation NSAttributedString (PdSFacilities)
 
