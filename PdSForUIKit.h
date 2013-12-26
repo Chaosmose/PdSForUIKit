@@ -26,10 +26,12 @@
 
 // Categories
 
-#import "UITableViewController+PdSFacilities.h"
+
 #import "UIView+RectCorners.h"
-#import "NSAttributedString+PdSFacilities.h"
 #import "UIColor+PdSFacilities.h"
+#import "UIImage+PdSEffect.h"
+#import "NSAttributedString+PdSFacilities.h"
+#import "UITableViewController+PdSFacilities.h"
 
 // Base classes
 

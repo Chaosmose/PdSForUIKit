@@ -22,6 +22,8 @@
 //
 
 #import "UIImage+PdSEffect.h"
+#import <Accelerate/Accelerate.h>
+#import <math.h>
 
 // utility to find position for x/y values in a matrix
 #define DSP_KERNEL_POSITION(x,y,size) (x * size + y)

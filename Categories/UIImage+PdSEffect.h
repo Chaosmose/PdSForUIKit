@@ -48,8 +48,7 @@
 // Documentation and clarification of  2);// kCGImageAlphaPremultipliedFirst BPDS
 
 #import <UIKit/UIKit.h>
-#import <Accelerate/Accelerate.h>
-#import <math.h>
+
 
 // all the different matrix sizes we support
 typedef enum {
@@ -58,7 +57,7 @@ typedef enum {
     DSPMatrixSizeCustom,
 } DSPMatrixSize;
 
-@interface UIImage (PdSEffect)
+@interface UIImage(PdSEffect)
 
 
 #pragma mark - Resize 
