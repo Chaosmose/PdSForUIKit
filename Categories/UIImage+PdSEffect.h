@@ -20,32 +20,25 @@
 //  Created by Benoit Pereira da Silva on 26/12/2013.
 //  Copyright (c) 2013 http://pereira-da-silva.com All rights reserved.
 //
-//  This category provides basic image processing facilities
+//  This category provides  very basic image processing facilities
 //
 //  - resizing (sub and sur-sampling)
-//  - blur (gaussian and motion blur)
+//  - blur
 //  - gray scale
 //  - alpha extraction, and fusion
 //
+//
 // ## History :
 //
-// Originally included in ve.rdict for "semi-realtime" blur, and alpha processing
-// It synthesize repackaged and patched sources from :
+//  Originally included in ve.rdict (in 2010) for "semi-realtime" blur, and alpha processing
+//  It synthesize repackaged and patched sources from :
 //
-// 1-  UIImage+Dsp.m Created by Andrew  https://github.com/gdawg/uiimage-dsp
-//     from Mad Dog Software (http://www.mad-dog-software.com) on 18/05/11.
+//  - It Uses a trick from Mickael Tyson :
+//    http://atastypixel.com/blog/achieve-smaller-app-downloads-by-replacing-large-pngs-with-jpeg-mask/
 //
-// 2-  Uses a trick from Mickael Tyson :
-//     http://atastypixel.com/blog/achieve-smaller-app-downloads-by-replacing-large-pngs-with-jpeg-mask/
+//  - It is Based for alpha extraction on UIImage+Alpha.h and for resizing UIImage+Resize.h
+//    Created by Trevor Harmon on 9/20/09.
 //
-// 3-  And for alpha extraction UIImage+Alpha.h
-//     Created by Trevor Harmon on 9/20/09.
-//
-// 4-  And for resizing UIImage+Resize.h
-//     Created by Trevor Harmon on 8/5/09.
-
-// BLUR 2 : extracted from nicklockwood / FXBlurView
-//  https://github.com/nicklockwood/FXBlurView
 
 // TODO A full set of tests
 // Documentation and clarification of  2);// kCGImageAlphaPremultipliedFirst BPDS
@@ -54,7 +47,7 @@
 #import <Accelerate/Accelerate.h>
 #import <math.h>
 
-@interface UIImage (PdSEffect )
+@interface UIImage (PdSEffect)
 
 #pragma mark - Resize 
 
@@ -75,14 +68,10 @@
                                   bounds:(CGSize)bounds
                     interpolationQuality:(CGInterpolationQuality)quality;
 
-//cornerRadius may be not fast (need to be revised)
-// Possibly deprecated.
-/*
 - (UIImage *)thumbnailImage:(NSInteger)thumbnailSize
           transparentBorder:(NSUInteger)borderSize
                cornerRadius:(NSUInteger)cornerRadius
        interpolationQuality:(CGInterpolationQuality)quality;
-*/
 
 #pragma mark - Alpha 
 
@@ -93,18 +82,10 @@
 
 #pragma mark - Blur 
 
-// Blurs
-+ (UIImage *)imageByApplyingGaussianBlur5x5:(UIImage*)image;
-+ (UIImage *)imageByApplyingGaussianBlur3x3:(UIImage*)image;
-+ (UIImage *)imageByApplyingDiagonalMotionBlur5x5:(UIImage*)image;
-+ (UIImage *)imageByApplyingBlurOn:(UIImage*)image size:(int)size sigma:(float)sigma;// 9,90.0
-
-#pragma mark - Blur 2
-
 + (UIImage *)blurImage:(UIImage*)image
-                  with:(CGFloat)radius
-           iterations:(NSUInteger)iterations
-            tintColor:(UIColor *)tintColor;
+            withRadius:(CGFloat)radius
+           repetitions:(NSUInteger)repetitions
+             tintColor:(UIColor *)tintColor;
 
 
 #pragma mark - grayScale

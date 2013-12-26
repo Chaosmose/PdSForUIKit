@@ -23,54 +23,6 @@
 
 #import "UIImage+PdSEffect.h"
 
-
-// utility to find position for x/y values in a matrix
-#define DSP_KERNEL_POSITION(x,y,size) (x * size + y)
-
-// all the different matrix sizes we support
-typedef enum {
-    DSPMatrixSize3x3,
-    DSPMatrixSize5x5,
-    DSPMatrixSizeCustom,
-} DSPMatrixSize;
-
-
-@interface UIImage (DSP)
-// return auto-released gaussian blurred image
--(UIImage*) imageByApplyingGaussianBlur3x3;
--(UIImage*) imageByApplyingGaussianBlur5x5;
-
-// gaussian blur with arbitrary kernel size and sigma (controlling the std deviation => spread => blur amount)
-// higher sigmaSq values result in more blur... experiment to find something appropriate for your application,
-// for kernel size of 8 you might try 30 to start
--(UIImage*) imageByApplyingGaussianBlurOfSize:(int)kernelSize withSigmaSquared:(float)sigmaSq;
-
-// methods are provided for both a two pass (default) and one pass gaussian blur but the two pass is STRONGLY
-// recomended due to mathematical equivallence and greatly increased speed for large kernels
-// as such I've left this commented out by default
-// -(UIImage*) imageByApplyingOnePassGaussianBlurOfSize:(int)kernelSize withSigmaSquared:(float)sigmaSq;
-
-// sharpening
--(UIImage*) imageByApplyingSharpen3x3;
-
-// others
--(UIImage*) imageByApplyingBoxBlur3x3; // not generally as good as gaussian
-
--(UIImage*) imageByApplyingEmboss3x3;
-
--(UIImage*) imageByApplyingDiagonalMotionBlur5x5;
-//-(UIImage*) imageByApplyingDiagonalMotionBlur7x7;
-
-// utility for normalizing matrices
--(void) normaliseMatrix:(float*)kernel ofSize:(int)size;
-
-// if you call these methods directly and do something interesting with them please consider
-// sending me details on github so that I may incorporate your awesomeness into the library
--(UIImage*) imageByApplyingMatrix:(float*)matrix ofSize:(DSPMatrixSize)matrixSize;
--(UIImage*) imageByApplyingMatrix:(float*)matrix ofSize:(DSPMatrixSize)matrixSize;
--(UIImage*) imageByApplyingMatrix:(float*)matrix ofSize:(DSPMatrixSize)matrixSize clipValues:(bool)shouldClip;
-@end
-
 @interface UIImage (PdSRoundedCorner)
 - (UIImage *)roundedCornerImage:(NSInteger)cornerSize borderSize:(NSInteger)borderSize;
 @end
@@ -389,43 +341,16 @@ typedef enum {
 }
 
 
-#pragma mark - Blur
-
-
-+ (UIImage *)imageByApplyingGaussianBlur5x5:(UIImage*)image {
-    return [image imageByApplyingGaussianBlur5x5];
-}
-
-+ (UIImage *)imageByApplyingGaussianBlur3x3:(UIImage*)image {
-    return [image imageByApplyingGaussianBlur3x3];
-}
-
-+ (UIImage *)imageByApplyingDiagonalMotionBlur5x5:(UIImage*)image {
-    return [image imageByApplyingDiagonalMotionBlur5x5];
-}
-
-
-+ (UIImage *)imageByApplyingBlurOn:(UIImage*)image size:(int)size sigma:(float)sigma{
-    return [image imageByApplyingGaussianBlurOfSize:size withSigmaSquared:sigma];
-}
-
-
-#pragma mark - Blur 2 
+#pragma mark - Blur  
 
 + (UIImage *)blurImage:(UIImage*)image
-                  with:(CGFloat)radius
-            iterations:(NSUInteger)iterations
+            withRadius:(CGFloat)radius
+            repetitions:(NSUInteger)repetitions
              tintColor:(UIColor *)tintColor{
-    
-   
-    //image must be nonzero size
-    if (floorf(image.size.width) * floorf(image.size.height) <= 0.0f) return image;
-
-    //boxsize must be an odd integer
+    if(CGSizeEqualToSize (image.size, CGSizeZero)
+       return image;
     uint32_t boxSize = radius * image.scale;
     if (boxSize % 2 == 0) boxSize ++;
-    
-    //create image buffers
     CGImageRef imageRef = image.CGImage;
     vImage_Buffer buffer1, buffer2;
     buffer1.width = buffer2.width = CGImageGetWidth(imageRef);
@@ -434,45 +359,29 @@ typedef enum {
     CFIndex bytes = buffer1.rowBytes * buffer1.height;
     buffer1.data = malloc(bytes);
     buffer2.data = malloc(bytes);
-    
-    //create temp buffer
     void *tempBuffer = malloc(vImageBoxConvolve_ARGB8888(&buffer1, &buffer2, NULL, 0, 0, boxSize, boxSize,
                                                          NULL, kvImageEdgeExtend + kvImageGetTempBufferSize));
-    
-    //copy image data
     CFDataRef dataSource = CGDataProviderCopyData(CGImageGetDataProvider(imageRef));
     memcpy(buffer1.data, CFDataGetBytePtr(dataSource), bytes);
     CFRelease(dataSource);
     
-    for (NSUInteger i = 0; i < iterations; i++)
-    {
-        //perform blur
+    for (NSUInteger i = 0; i < repetitions; i++){
         vImageBoxConvolve_ARGB8888(&buffer1, &buffer2, tempBuffer, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
-        
-        //swap buffers
         void *temp = buffer1.data;
         buffer1.data = buffer2.data;
         buffer2.data = temp;
     }
-    
-    //free buffers
     free(buffer2.data);
     free(tempBuffer);
-    
-    //create image context from buffer
     CGContextRef ctx = CGBitmapContextCreate(buffer1.data, buffer1.width, buffer1.height,
                                              8, buffer1.rowBytes, CGImageGetColorSpace(imageRef),
                                              CGImageGetBitmapInfo(imageRef));
     
-    //apply tint
-    if (tintColor && CGColorGetAlpha(tintColor.CGColor) > 0.0f)
-    {
+    if (tintColor && CGColorGetAlpha(tintColor.CGColor) > 0.0f){
         CGContextSetFillColorWithColor(ctx, [tintColor colorWithAlphaComponent:0.25].CGColor);
         CGContextSetBlendMode(ctx, kCGBlendModePlusLighter);
         CGContextFillRect(ctx, CGRectMake(0, 0, buffer1.width, buffer1.height));
     }
-    
-    //create image from context
     imageRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = [UIImage imageWithCGImage:imageRef scale:imgCopy.scale orientation:imgCopy.imageOrientation];
     CGImageRelease(imageRef);
