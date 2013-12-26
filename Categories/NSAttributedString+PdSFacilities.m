@@ -48,7 +48,7 @@ const CGFloat PdSDefaultLinesSpacing=0.f;
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:lineSpacing];
-    [paragraphStyle setAlignment:alignment];
+    [paragraphStyle setAlignment:(NSTextAlignment)alignment];
     
     NSDictionary *attributes = @{
                             NSParagraphStyleAttributeName:  paragraphStyle,

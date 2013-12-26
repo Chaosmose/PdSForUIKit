@@ -35,5 +35,6 @@
 
 #import "PdSUITableViewCell.h"
 #import "PdSUIView.h"
+#import "PdSUIButton.h"
 
 #endif

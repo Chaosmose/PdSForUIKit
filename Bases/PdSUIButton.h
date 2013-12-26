@@ -21,7 +21,6 @@
 //
 //
 
-#import <UIKit/UIKit.h>
 #import "UIView+RectCorners.h"
 
 @interface PdSUIButton :UIButton

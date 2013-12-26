@@ -20,9 +20,8 @@
 //
 //
 
-#import <UIKit/UIKit.h>
 
-
+#import "UIView+RectCorners.h"
 /*
  
     You can  use appaerance proxy :
