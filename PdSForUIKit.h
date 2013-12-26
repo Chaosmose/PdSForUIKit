@@ -26,17 +26,23 @@
 
 // Categories
 
-
 #import "UIView+RectCorners.h"
-#import "UIColor+PdSFacilities.h"
-#import "UIImage+PdSEffect.h"
 #import "NSAttributedString+PdSFacilities.h"
 #import "UITableViewController+PdSFacilities.h"
 
-// Base classes
+// Experimental : can be deprecated
+// Colors (in progress)
+#import "UIColor+PdSFacilities.h"
 
+// Imaging
+// For a real time image processor check : https://github.com/BradLarson/GPUImage
+#import "UIImage+PdSEffect.h"
+
+
+// Base classes
 #import "PdSUITableViewCell.h"
 #import "PdSUIView.h"
 #import "PdSUIButton.h"
 
 #endif
+

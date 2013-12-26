@@ -44,21 +44,17 @@
 // 4-  And for resizing UIImage+Resize.h
 //     Created by Trevor Harmon on 8/5/09.
 
+// BLUR 2 : extracted from nicklockwood / FXBlurView
+//  https://github.com/nicklockwood/FXBlurView
+
 // TODO A full set of tests
 // Documentation and clarification of  2);// kCGImageAlphaPremultipliedFirst BPDS
 
 #import <UIKit/UIKit.h>
+#import <Accelerate/Accelerate.h>
+#import <math.h>
 
-
-// all the different matrix sizes we support
-typedef enum {
-    DSPMatrixSize3x3,
-    DSPMatrixSize5x5,
-    DSPMatrixSizeCustom,
-} DSPMatrixSize;
-
-@interface UIImage(PdSEffect)
-
+@interface UIImage (PdSEffect )
 
 #pragma mark - Resize 
 
@@ -102,6 +98,14 @@ typedef enum {
 + (UIImage *)imageByApplyingGaussianBlur3x3:(UIImage*)image;
 + (UIImage *)imageByApplyingDiagonalMotionBlur5x5:(UIImage*)image;
 + (UIImage *)imageByApplyingBlurOn:(UIImage*)image size:(int)size sigma:(float)sigma;// 9,90.0
+
+#pragma mark - Blur 2
+
++ (UIImage *)blurImage:(UIImage*)image
+                  with:(CGFloat)radius
+           iterations:(NSUInteger)iterations
+            tintColor:(UIColor *)tintColor;
+
 
 #pragma mark - grayScale
 
