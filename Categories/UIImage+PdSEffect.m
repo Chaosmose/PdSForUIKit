@@ -22,6 +22,8 @@
 //
 
 #import "UIImage+PdSEffect.h"
+#import <CoreGraphics/CoreGraphics.h>
+
 
 @interface UIImage (PdSRoundedCorner)
 - (UIImage *)roundedCornerImage:(NSInteger)cornerSize borderSize:(NSInteger)borderSize;
@@ -350,7 +352,8 @@
     if(CGSizeEqualToSize (image.size, CGSizeZero))
        return image;
     uint32_t boxSize = radius * image.scale;
-    if (boxSize % 2 == 0) boxSize ++;
+    if (boxSize % 2 == 0)
+        boxSize ++;
     CGImageRef imageRef = image.CGImage;
     vImage_Buffer buffer1, buffer2;
     buffer1.width = buffer2.width = CGImageGetWidth(imageRef);
@@ -387,7 +390,7 @@
     CGImageRelease(imageRef);
     CGContextRelease(ctx);
     free(buffer1.data);
-    return image;
+    return imgCopy;
 }
 
 
