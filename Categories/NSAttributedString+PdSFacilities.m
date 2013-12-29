@@ -43,7 +43,7 @@ const CGFloat PdSDefaultLinesSpacing=0.f;
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
-                                  alignment:(PdSTextAlignments)alignment
+                                  alignment:(NSTextAlignment)alignment
                                 lineSpacing:(CGFloat)lineSpacing{
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
