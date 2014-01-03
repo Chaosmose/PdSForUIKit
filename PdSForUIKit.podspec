@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   
    s.subspec 'Commons' do |ss|
       ss.description     = 'A bunch of usefull cells, views and button classes'
-      ss.source_files =  'Bases/*.{h,m}','Commons/*.h,m}'
-      ss.public_header_files = 'Bases/*.h','Commons/*.h'
+      ss.source_files =  'Commons/*.{h,m}'
+      ss.public_header_files = 'Commons/*.h'
   end
   
 end
