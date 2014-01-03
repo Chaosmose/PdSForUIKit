@@ -9,6 +9,13 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '5.1'
   s.ios.framework = 'UIKit', 'CoreGraphics'
   s.requires_arc = true
-  s.source_files =  'PdSForUIKit.h','Categories/*.{h,m}', 'Bases/*.{h,m}'
-  s.public_header_files = 'PdSForUIKit.h','Categories/*.h','Bases/*.h'
+  s.source_files =  'PdSForUIKit.h','Categories/*.{h,m}'
+  s.public_header_files = 'PdSForUIKit.h','Categories/*.h'
+  
+   s.subspec 'Commons' do |ss|
+      ss.description     = 'A bunch of usefull cells, views and button classes'
+      ss.source_files =  'Bases/*.{h,m}','Commons/*.h,m}'
+      ss.public_header_files = 'Bases/*.h','Commons/*.h'
+  end
+  
 end
