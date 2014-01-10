@@ -30,6 +30,7 @@ extern const CGFloat PdSDefaultLinesSpacing;
 
 /**
  *  An NSAttributedString factory with the essentials
+ *  If the string is nil returns one space @" "
  *
  *  @param string         the string
  *  @param font           the font

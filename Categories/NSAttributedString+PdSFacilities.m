@@ -29,34 +29,38 @@ const CGFloat PdSDefaultLinesSpacing=0.f;
 @implementation NSAttributedString (PdSFacilities)
 
 
-    /**
-     *  An NSAttributedString factory with the essentials
-     *
-     *  @param string         the string
-     *  @param font           the font
-     *  @param textColor      the text color
-     *  @param alignment      the alignment
-     *  @param lineSpacing    the spacing between lines
-     *
-     *  @return an attributed string
-*/
+/**
+ *  An NSAttributedString factory with the essentials
+ *  If the string is nil returns one space @" "
+ *
+ *  @param string         the string
+ *  @param font           the font
+ *  @param textColor      the text color
+ *  @param alignment      the alignment
+ *  @param lineSpacing    the spacing between lines
+ *
+ *  @return an attributed string
+ */
 + (NSAttributedString*)attributedStringFrom:(NSString*)string
                                    withFont:(UIFont*)font
                                   textColor:(UIColor*)textColor
                                   alignment:(NSTextAlignment)alignment
                                 lineSpacing:(CGFloat)lineSpacing{
-    
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineSpacing:lineSpacing];
-    [paragraphStyle setAlignment:(NSTextAlignment)alignment];
-    
-    NSDictionary *attributes = @{
-                            NSParagraphStyleAttributeName:  paragraphStyle,
-                            NSForegroundColorAttributeName : textColor,
-                            NSFontAttributeName : font,
-                            };
-    NSAttributedString*attString=[[NSAttributedString alloc] initWithString:string attributes:attributes];
-    return attString;
+    if(!string){
+        return [[NSAttributedString alloc] initWithString:@" "];
+    }
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:lineSpacing];
+        [paragraphStyle setAlignment:(NSTextAlignment)alignment];
+        
+        NSDictionary *attributes = @{
+                                     NSParagraphStyleAttributeName:  paragraphStyle,
+                                     NSForegroundColorAttributeName : textColor,
+                                     NSFontAttributeName : font,
+                                     };
+        NSAttributedString*attString=[[NSAttributedString alloc] initWithString:string attributes:attributes];
+        return attString;
+    }
 }
 
 /**
