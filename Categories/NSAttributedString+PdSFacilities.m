@@ -49,18 +49,17 @@ const CGFloat PdSDefaultLinesSpacing=0.f;
     if(!string){
         return [[NSAttributedString alloc] initWithString:@" "];
     }
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setLineSpacing:lineSpacing];
-        [paragraphStyle setAlignment:(NSTextAlignment)alignment];
-        
-        NSDictionary *attributes = @{
-                                     NSParagraphStyleAttributeName:  paragraphStyle,
-                                     NSForegroundColorAttributeName : textColor,
-                                     NSFontAttributeName : font,
-                                     };
-        NSAttributedString*attString=[[NSAttributedString alloc] initWithString:string attributes:attributes];
-        return attString;
-    }
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:lineSpacing];
+    [paragraphStyle setAlignment:(NSTextAlignment)alignment];
+    
+    NSDictionary *attributes = @{
+                                 NSParagraphStyleAttributeName:  paragraphStyle,
+                                 NSForegroundColorAttributeName : textColor,
+                                 NSFontAttributeName : font,
+                                 };
+    NSAttributedString*attString=[[NSAttributedString alloc] initWithString:string attributes:attributes];
+    return attString;
 }
 
 /**
@@ -72,10 +71,10 @@ const CGFloat PdSDefaultLinesSpacing=0.f;
  */
 -(CGFloat)heightConstrainedToWidth:(CGFloat)width{
     CGRect rect = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
-                                       options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                       context:nil];
+                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                     context:nil];
     return rect.size.height;
-
+    
 }
 
 /**
@@ -87,8 +86,8 @@ const CGFloat PdSDefaultLinesSpacing=0.f;
  */
 -(CGFloat)widthConstrainedToHeight:(CGFloat)height{
     CGRect rect = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, height)
-                                       options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                       context:nil];
+                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                     context:nil];
     return rect.size.width;
 }
 
