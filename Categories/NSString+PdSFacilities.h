@@ -25,6 +25,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (PdSFacilities)
+
 /**
  *  Filters the files path
  *  eg : removes : "file:///private"
@@ -32,5 +33,14 @@
  *  @return a filtered file path
  */
 + (NSString *)filteredFilePathFrom:(NSString*)path;
+
+
+/**
+ *  Applies the filter to self
+ *  @return a filtered file path
+ */
+- (NSString *)filteredFilePath;
+
+
 
 @end

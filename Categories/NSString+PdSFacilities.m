@@ -19,11 +19,22 @@
 + (NSString*)filteredFilePathFrom:(NSString*)path{
     if(!path)
         return path;
+    // Those filrering operations are necessary sometimes when manipulating IOS FS.
+    //
     NSString *filtered=[path copy];
     filtered=[filtered stringByReplacingOccurrencesOfString:@"file:///private" withString:@""];
-    filtered=[filtered stringByReplacingOccurrencesOfString:@"%20" withString @""];
+    filtered=[filtered stringByReplacingOccurrencesOfString:@"file://" withString:@""];
+    filtered=[filtered stringByReplacingOccurrencesOfString:@"%20" withString:@" "];// convert %20 to a space 
     return filtered;
 }
 
+
+/**
+ *  Applies the filter to self
+ *  @return a filtered file path
+ */
+- (NSString *)filteredFilePath{
+    return [NSString filteredFilePathFrom:self];
+}
 
 @end
