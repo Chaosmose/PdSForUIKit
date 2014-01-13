@@ -10,6 +10,7 @@
 
 @implementation NSString (PdSFacilities)
 
+
 /**
  *  Filters the files path
  *  eg : removes : "file:///private"
@@ -19,12 +20,10 @@
 + (NSString*)filteredFilePathFrom:(NSString*)path{
     if(!path)
         return path;
-    // Those filrering operations are necessary sometimes when manipulating IOS FS.
-    //
-    NSString *filtered=[path copy];
+    // Those filtering operations may be necessary sometimes when manipulating IOS FS.
+    NSString *filtered=[[path copy] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     filtered=[filtered stringByReplacingOccurrencesOfString:@"file:///private" withString:@""];
     filtered=[filtered stringByReplacingOccurrencesOfString:@"file://" withString:@""];
-    filtered=[filtered stringByReplacingOccurrencesOfString:@"%20" withString:@" "];// convert %20 to a space 
     return filtered;
 }
 
