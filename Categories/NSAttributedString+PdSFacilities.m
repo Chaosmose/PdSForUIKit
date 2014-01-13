@@ -14,7 +14,7 @@
 // along with "PdSForUIKit"  If not, see <http://www.gnu.org/licenses/>
 //
 //
-//  NSAttributedString+PDSFacilities.m
+//  NSAttributedString+PdSFacilities.m
 //  PdSForUIKit
 //
 //  Created by Benoit Pereira da Silva on 23/11/2013.

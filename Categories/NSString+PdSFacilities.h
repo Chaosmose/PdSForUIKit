@@ -14,36 +14,23 @@
 // along with "PdSForUIKit"  If not, see <http://www.gnu.org/licenses/>
 //
 //
-//  PdSForUIKit.h
-//  Pods
+//  NSString+PdSFacilities.h
+//  PdSForUIKit
 //
-//  Created by Benoit Pereira da Silva on 07/12/2013.
+//  Created by Benoit Pereira da Silva on 13/01/2014.
+//  Copyright (c) 2013 http://pereira-da-silva.com All rights reserved.
 //
-//
-
-#ifndef PdSForUIKit
-#define PdSForUIKit
-
-// Categories
-
-#import "UIView+RectCorners.h"
-#import "NSAttributedString+PdSFacilities.h"
-#import "NSString+PdSFacilities.h"
-#import "UITableViewController+PdSFacilities.h"
-
-// Experimental : can be deprecated
-// Colors (in progress)
-#import "UIColor+PdSFacilities.h"
-
-// Imaging
-// For a real time image processor check : https://github.com/BradLarson/GPUImage
-#import "UIImage+PdSEffect.h"
 
 
-// Base classes
-#import "PdSUITableViewCell.h"
-#import "PdSUIView.h"
-#import "PdSUIButton.h"
+#import <Foundation/Foundation.h>
 
-#endif
+@interface NSString (PdSFacilities)
+/**
+ *  Filters the files path
+ *  eg : removes : "file:///private"
+ *  @param path the original path
+ *  @return a filtered file path
+ */
++ (NSString *)filteredFilePathFrom:(NSString*)path;
 
+@end
