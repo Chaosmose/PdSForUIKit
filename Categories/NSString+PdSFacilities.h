@@ -27,8 +27,8 @@
 @interface NSString (PdSFacilities)
 
 /**
- *  Filters the files path
- *  eg : removes : "file:///private"
+ *  Filters a file path (a lot of valid URL absolutePath are not valid paths)
+ *  eg : removes prefix and decodes the url encoded characters
  *  @param path the original path
  *  @return a filtered file path
  */
