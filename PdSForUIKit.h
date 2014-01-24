@@ -28,7 +28,6 @@
 
 #import "UIView+RectCorners.h"
 #import "NSAttributedString+PdSFacilities.h"
-#import "NSString+PdSFacilities.h"
 #import "UITableViewController+PdSFacilities.h"
 
 // Experimental : can be deprecated
