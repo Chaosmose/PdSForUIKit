@@ -29,6 +29,7 @@
 #import "UIView+RectCorners.h"
 #import "NSAttributedString+PdSFacilities.h"
 #import "UITableViewController+PdSFacilities.h"
+#import "UIFont+PdSFacilities.h"
 
 // Experimental : can be deprecated
 // Colors (in progress)
